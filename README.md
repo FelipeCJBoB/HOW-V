@@ -1,3 +1,5 @@
+# Em desenvolvimento ! para Etapa 2 Final do projeto Hands On Work V. 
+
 # 💡 Hands On Work V (HOW V) - Site NaveLuz
 
 Este projeto foi desenvolvido como parte da disciplina de **Trabalho prático V** do curso de Análise e Desenvolvimento de Sistemas (ADS) na **Univali - Campus Itajaí**. . . . . 
