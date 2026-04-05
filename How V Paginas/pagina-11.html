@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naveluz - Gestão de Inventário</title>
+</head>
+<body>
+
+    <div class="admin-container" style="display: flex;">
+        
+        <aside class="sidebar" style="width: 250px;">
+            <div class="logo">
+                <h1>Admin Console</h1>
+                <p>Naveluz Management</p>
+            </div>
+            
+            <nav class="menu-principal">
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li class="active"><a href="#">Inventory</a></li>
+                    <li><a href="#">Orders</a></li>
+                    <li><a href="#">Customers</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button>View Storefront</button>
+            </div>
+        </aside>
+
+        <main class="content-area" style="flex-grow: 1;">
+            
+            <header class="page-header">
+                <div class="title-group">
+                    <h2>Gestão de Inventário</h2>
+                    <p>Visualize e edite o catálogo de iluminação e materiais elétricos.</p>
+                </div>
+                <button class="btn-add">+ Adicionar Produto</button>
+            </header>
+
+            <section class="filters-bar">
+                <input type="text" placeholder="Buscar por nome ou SKU...">
+                <select><option>Todas Categorias</option></select>
+                <select><option>Status do Estoque</option></select>
+                <button class="btn-filter-icon"><i>Icon</i></button>
+            </section>
+
+            <section class="product-grid" style="display: grid; grid-template-columns: repeat(3, 1fr);">
+                
+                <article class="product-card">
+                    <div class="card-header">
+                        <span class="sku">SKU: NV-8829</span>
+                        <img src="luminaria.jpg" alt="Luminária Pendente">
+                    </div>
+                    <div class="card-body">
+                        <span class="category">ILUMINAÇÃO PREMIUM</span>
+                        <h3>Luminária Pendente Minimali...</h3>
+                        <p class="price">R$ 849,90</p>
+                        <span class="stock-status in-stock">24 em estoque</span>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn-edit">Editar</button>
+                        <button class="btn-delete">Lixeira</button>
+                    </div>
+                </article>
+
+                <article class="product-card sold-out">
+                    <div class="card-header">
+                        <span class="badge-esgotado">ESGOTADO</span>
+                        <img src="parafusadeira.jpg" alt="Parafusadeira">
+                    </div>
+                    </article>
+
+                <article class="product-card add-new">
+                    <div class="add-content">
+                        <span class="plus-icon">+</span>
+                        <h3>Novo Produto</h3>
+                        <p>Clique para expandir o catálogo</p>
+                    </div>
+                </article>
+
+            </section>
+
+            <footer class="pagination-area">
+                <p>Mostrando 1-5 de 248 produtos</p>
+                <nav class="pagination-controls">
+                    <button><</button>
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>></button>
+                </nav>
+            </footer>
+
+            <footer class="main-footer">
+                <div class="footer-info">
+                    <h4>Naveluz</h4>
+                    <p>Referência em soluções elétricas...</p>
+                </div>
+                <div class="footer-links">
+                    <nav>
+                        <h5>Suporte</h5>
+                        <a href="#">Contact Us</a>
+                    </nav>
+                    <nav>
+                        <h5>Legal</h5>
+                        <a href="#">Terms of Service</a>
+                    </nav>
+                </div>
+                <p class="copyright">© 2024 NAVELUZ COMERCIO DE MATERIAIS ELETRICOS LTDA.</p>
+            </footer>
+
+        </main>
+    </div>
+
+</body>
+</html>

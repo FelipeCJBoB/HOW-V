@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Pagamento | Naveluz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER SIMPLIFICADO (Foco na conversão) */
+        header {
+            background: #fff;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .secure-badge {
+            font-size: 12px;
+            color: #28a745;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* LAYOUT */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        /* BLOCOS DE FORMULÁRIO */
+        .checkout-section {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .step-number {
+            background: #000;
+            color: #fff;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #000;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row div {
+            flex: 1;
+        }
+
+        /* OPÇÕES DE PAGAMENTO */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .method-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .method-card:hover {
+            border-color: #000;
+        }
+
+        .method-card.active {
+            border: 2px solid #000;
+            background: #f9f9f9;
+        }
+
+        .method-card i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* RESUMO LATERAL */
+        .order-review {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .review-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .review-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .totals {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .grand-total {
+            font-size: 20px;
+            font-weight: 800;
+            margin-top: 10px;
+        }
+
+        .btn-pay {
+            width: 100%;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 18px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 850px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">NAVELUZ</div>
+        <span class="secure-badge">🔒 Ambiente 100% Seguro</span>
+    </header>
+
+    <main class="container">
+        <div class="checkout-grid">
+
+            <div class="checkout-form">
+
+                <section class="checkout-section">
+                    <div class="section-header">
+                        <span class="step-number">1</span>
+                        <h2>Identificação</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>E-MAIL</label>
+                        <input type="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>NOME COMPLETO</label>
+                            <input type="text" placeholder="Como no documento">
+                        </div>
+                        <div class="form-group">
+                            <label>CPF</label>
+                            <input type="text" placeholder="000.000.000-00">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="checkout-section">
+                    <div class="section-header">
+                        <span class="step-number">2</span>
+                        <h2>Entrega</h2>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>CEP</label>
+                            <input type="text" placeholder="00000-000">
+                        </div>
+                        <div style="flex: 2;">
+                            <label>ENDEREÇO</label>
+                            <input type="text" placeholder="Rua, Avenida...">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>NÚMERO</label>
+                            <input type="text">
+                        </div>
+                        <div class="form-group" style="flex: 2;">
+                            <label>COMPLEMENTO</label>
+                            <input type="text" placeholder="Apto, Bloco...">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="checkout-section">
+                    <div class="section-header">
+                        <span class="step-number">3</span>
+                        <h2>Pagamento</h2>
+                    </div>
+
+                    <div class="payment-methods">
+                        <div class="method-card active">
+                            <span>💳</span>
+                            <p>Cartão</p>
+                        </div>
+                        <div class="method-card">
+                            <span>📄</span>
+                            <p>Pix</p>
+                        </div>
+                        <div class="method-card">
+                            <span>💰</span>
+                            <p>Boleto</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <div class="form-group">
+                            <label>NÚMERO DO CARTÃO</label>
+                            <input type="text" placeholder="0000 0000 0000 0000">
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label>VALIDADE</label>
+                                <input type="text" placeholder="MM/AA">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="order-review">
+                <h2>Resumo do Pedido</h2>
+                <div style="margin-top: 20px;">
+
+                    <div class="review-item">
+                        <img src="https://images.tcdn.com.br/img/img_prod/739158/torneira_eletrica_slim_4t_parede_branca_hydra_5533_1_18b958c8959666f461e7127e467d0234.jpg"
+                            alt="Produto">
+                        <div>
+                            <p><strong>Torneira Slim 4T Hydra</strong></p>
+                            <p>Qtd: 1 | R$ 219,00</p>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <img src="https://images.tcdn.com.br/img/img_prod/634433/pendente_industrial_retro_preto_fosco_797_1_20201021150454.jpg"
+                            alt="Produto">
+                        <div>
+                            <p><strong>Pendente Onyx Black</strong></p>
+                            <p>Qtd: 2 | R$ 489,90</p>
+                        </div>
+                    </div>
+
+                    <div class="totals">
+                        <div class="total-row">
+                            <span>Subtotal</span>
+                            <span>R$ 1.198,80</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Frete</span>
+                            <span style="color: #28a745;">Grátis</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <strong>Total</strong>
+                            <strong>R$ 1.198,80</strong>
+                        </div>
+                    </div>
+
+                    <button class="btn-pay">Finalizar Pedido</button>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

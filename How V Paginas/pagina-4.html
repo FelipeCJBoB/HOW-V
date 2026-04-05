@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneira Slim 4T Hydra | Naveluz</title>
+    <style>
+        /* RESET E ESTILOS GERAIS */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #fff; color: #333; line-height: 1.5; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* HEADER */
+        header { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .nav-top { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 25px; font-size: 14px; font-weight: 600; text-transform: uppercase; }
+        .search-bar { display: flex; align-items: center; background: #f4f4f4; padding: 8px 15px; border-radius: 20px; width: 300px; }
+        .search-bar input { border: none; background: none; outline: none; width: 100%; font-size: 13px; }
+
+        /* BREADCRUMB */
+        .breadcrumb { font-size: 12px; color: #888; margin: 20px 0; text-transform: uppercase; }
+
+        /* SEÇÃO PRODUTO PRINCIPAL */
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 60px; }
+        
+        /* Galeria */
+        .gallery-container { display: flex; gap: 15px; }
+        .thumbnails { display: flex; flex-direction: column; gap: 10px; }
+        .thumbnails img { width: 70px; height: 70px; border: 1px solid #eee; cursor: pointer; object-fit: contain; }
+        .main-img { flex: 1; border: 1px solid #f9f9f9; display: flex; align-items: center; justify-content: center; }
+        .main-img img { max-width: 100%; height: auto; }
+
+        /* Infos de Compra */
+        .product-buy { display: flex; flex-direction: column; gap: 15px; }
+        .brand-badge { background: #000; color: #fff; width: fit-content; padding: 4px 10px; font-size: 10px; font-weight: bold; border-radius: 3px; }
+        .product-buy h1 { font-size: 32px; font-weight: 700; line-height: 1.2; }
+        .tagline { color: #666; font-size: 16px; }
+        
+        .price-box { margin: 20px 0; }
+        .old-price { text-decoration: line-through; color: #999; font-size: 16px; }
+        .current-price { display: block; font-size: 36px; font-weight: 800; color: #000; }
+        .discount { background: #e6f7ed; color: #28a745; padding: 3px 8px; font-size: 12px; font-weight: bold; border-radius: 4px; margin-left: 10px; }
+
+        .selector-label { font-size: 12px; font-weight: bold; margin-bottom: 8px; display: block; }
+        .voltage-options { display: flex; gap: 10px; margin-bottom: 20px; }
+        .voltage-btn { padding: 10px 25px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-weight: 600; border-radius: 4px; }
+        .voltage-btn.active { border: 2px solid #000; }
+
+        .buy-actions { display: flex; gap: 15px; margin-top: 10px; }
+        .qty-selector { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 4px; }
+        .qty-selector button { padding: 10px 15px; border: none; background: none; cursor: pointer; font-size: 18px; }
+        .qty-selector span { padding: 0 15px; font-weight: bold; }
+        .btn-add { flex: 1; background: #28a745; color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn-add:hover { background: #218838; }
+
+        /* TABS DE DETALHES */
+        .tabs { border-top: 1px solid #eee; margin-top: 40px; }
+        .tabs-nav { display: flex; gap: 40px; border-bottom: 1px solid #eee; }
+        .tabs-nav button { background: none; border: none; padding: 20px 0; font-weight: bold; cursor: pointer; border-bottom: 2px solid transparent; text-transform: uppercase; font-size: 13px; }
+        .tabs-nav button.active { border-bottom-color: #000; }
+        
+        .tab-content { padding: 40px 0; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .tab-content h2 { margin-bottom: 20px; font-size: 24px; }
+        .specs-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 14px; }
+        .specs-list li { border-bottom: 1px solid #f4f4f4; padding-bottom: 5px; }
+        .specs-list b { color: #555; }
+
+        .install-card { background: #f9f9f9; padding: 30px; border-radius: 8px; }
+        .btn-manual { display: inline-block; margin-top: 15px; color: #000; font-weight: bold; border-bottom: 2px solid #000; font-size: 13px; }
+
+        /* RODAPÉ */
+        footer { background: #f4f4f4; padding: 60px 0 20px; margin-top: 60px; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; border-bottom: 1px solid #ddd; padding-bottom: 40px; }
+        .footer-col h4 { margin-bottom: 20px; font-size: 14px; text-transform: uppercase; }
+        .footer-col p, .footer-col li { font-size: 13px; color: #666; margin-bottom: 10px; }
+        .copyright { text-align: center; padding-top: 20px; font-size: 11px; color: #999; }
+
+        @media (max-width: 800px) {
+            .product-grid, .tab-content, .footer-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-top">
+            <div class="logo">NAVELUZ</div>
+            <ul class="nav-links">
+                <li><a href="#">Elétrica</a></li>
+                <li><a href="#">Automação</a></li>
+                <li><a href="#">Iluminação</a></li>
+                <li><a href="#">Ferramentas</a></li>
+            </ul>
+            <div class="search-bar">
+                <input type="text" placeholder="O que você procura?">
+                <span>🔍</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            Home / Materiais de Construção / <strong>Torneira Slim 4T Hydra</strong>
+        </nav>
+
+        <section class="product-grid">
+            <div class="gallery-container">
+                <div class="thumbnails">
+                    <img src="https://images.tcdn.com.br/img/img_prod/739158/torneira_eletrica_slim_4t_parede_branca_hydra_5533_1_18b958c8959666f461e7127e467d0234.jpg" alt="Vista 1">
+                    <img src="https://images.tcdn.com.br/img/img_prod/739158/torneira_eletrica_slim_4t_parede_branca_hydra_5533_2_20201021150454.jpg" alt="Vista 2">
+                    <img src="https://images.tcdn.com.br/img/img_prod/739158/torneira_eletrica_slim_4t_parede_branca_hydra_5533_3_20201021150454.jpg" alt="Vista 3">
+                </div>
+                <div class="main-img">
+                    <img src="https://images.tcdn.com.br/img/img_prod/739158/torneira_eletrica_slim_4t_parede_branca_hydra_5533_1_18b958c8959666f461e7127e467d0234.jpg" alt="Torneira Slim 4T">
+                </div>
+            </div>
+
+            <div class="product-buy">
+                <span class="brand-badge">PREMIUM HYDRA SERIES</span>
+                <h1>Torneira Slim 4T Hydra - Parede</h1>
+                <p class="tagline">Multitemperatura com design contemporâneo para sua cozinha.</p>
+                
+                <div class="price-box">
+                    <span class="old-price">R$ 580,00</span>
+                    <div style="display: flex; align-items: center;">
+                        <span class="current-price">R$ 219,00</span>
+                        <span class="discount">64% OFF</span>
+                    </div>
+                </div>
+
+                <div class="selector">
+                    <span class="selector-label">VOLTAGEM</span>
+                    <div class="voltage-options">
+                        <button class="voltage-btn">127V</button>
+                        <button class="voltage-btn active">220V</button>
+                    </div>
+                </div>
+
+                <div class="buy-actions">
+                    <div class="qty-selector">
+                        <button>-</button>
+                        <span>1</span>
+                        <button>+</button>
+                    </div>
+                    <button class="btn-add">Adicionar ao Carrinho</button>
+                </div>
+
+                <div style="margin-top: 20px; font-size: 13px; color: #666;">
+                    🚚 Frete grátis para compras acima de R$ 499,00
+                </div>
+            </div>
+        </section>
+
+        <section class="tabs">
+            <div class="tabs-nav">
+                <button class="active">Descrição Técnica</button>
+                <button>Avaliações (48)</button>
+                <button>Instalação</button>
+            </div>
+            <div class="tab-content">
+                <div>
+                    <h2>Eficiência e Controle</h2>
+                    <p style="margin-bottom: 25px;">A Torneira Slim 4T da Hydra possui um sistema multitemperatura que permite a escolha gradual da temperatura da água, garantindo economia e conforto em todas as estações do ano.</p>
+                    
+                    <ul class="specs-list">
+                        <li><b>Potência:</b> 5500W (127V) / 6400W (220V)</li>
+                        <li><b>Fiação Mínima:</b> 10mm (127V) / 4mm (220V)</li>
+                        <li><b>Pressão Mínima:</b> 20 kPa (2 m.c.a.)</li>
+                        <li><b>Disjuntor:</b> 50A (127V) / 32A (220V)</li>
+                        <li><b>Grau de Proteção:</b> IP24</li>
+                        <li><b>Garantia:</b> 1 Ano</li>
+                    </ul>
+                </div>
+                <div class="install-card">
+                    <h3>Fácil Instalação</h3>
+                    <p style="font-size: 14px; color: #555; margin-top: 10px;">Sistema exclusivo de engate rápido. Não necessita de ferramentas complexas para montagem na parede.</p>
+                    <a href="#" class="btn-manual">BAIXAR MANUAL .PDF</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">NAVELUZ</div>
+                    <p>Materiais Elétricos e Iluminação de alta performance para sua casa ou empresa.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorias</h4>
+                    <ul>
+                        <li>Fios e Cabos</li>
+                        <li>Interruptores</li>
+                        <li>Luminárias</li>
+                        <li>Chuveiros</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Institucional</h4>
+                    <ul>
+                        <li>Sobre Nós</li>
+                        <li>Políticas de Troca</li>
+                        <li>Prazos de Entrega</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Atendimento</h4>
+                    <p>📞 (47) 99257-4071</p>
+                    <p>📧 contato@naveluz.com.br</p>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2026 NAVELUZ COMÉRCIO DE MATERIAIS ELÉTRICOS LTDA - TODOS OS DIREITOS RESERVADOS
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

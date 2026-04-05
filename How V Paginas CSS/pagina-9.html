@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naveluz Admin - Gerenciamento de Produtos</title>
+    <Style>
+        :root {
+            --bg-body: #f4f7f6;
+            --sidebar-bg: #ffffff;
+            --primary-blue: #003366;
+            --accent-blue: #0056b3;
+            --accent-red: #e74c3c;
+            --text-main: #333333;
+            --text-muted: #888888;
+            --border-color: #e0e0e0;
+            --white: #ffffff;
+            --success: #28a745;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 240px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .logo h1 {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+        }
+
+        .logo span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        nav {
+            margin-top: 40px;
+            flex-grow: 1;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav ul li a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        nav ul li.active {
+            background: #eef2f7;
+            color: var(--primary-blue);
+        }
+
+        nav ul li:hover:not(.active) {
+            background: #f9f9f9;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            margin-left: 240px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            width: calc(100% - 240px)
+        }
+
+        .top-bar {
+            background: var(--white);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-back {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-discard {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--white);
+            cursor: pointer;
+            font-size: 0.850rem;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #f9f9f9;
+            color: var(--text-main);
+        }
+
+        /* --- GRID DE CONTEÚDO --- */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            padding: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .card a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        .card h3 {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card h3 span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #fafafa;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .input-group {
+            flex: 1;
+        }
+
+        /* --- AREA DE MÍDIA E STATUS --- */
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            text-align: center;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .thumb-grid {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumb {
+            width: 60px;
+            height: 60px;
+            background: #eee;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-badge {
+            background: #e7f4e9;
+            color: var(--success);
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .dark-card {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .dark-card h3 {
+            color: white;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- FOOTER --- */
+        .main-footer {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links strong {
+            margin-bottom: 5px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-copy {
+            text-align: right;
+            color: var(--text-muted);
+            align-self: flex-end;
+            font-size: 0.75rem;
+        }
+
+        .page-footer {
+            margin-top: auto;
+            background: var(--white);
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .footer-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .copyright {
+            text-align: right;
+            color: var(--text-muted);
+        }
+
+        /* --- FILTERS --- */
+        .filters-section {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            padding: 15px;
+            width: 100%;
+        }
+
+        .filters-section .filter-group:first-child {
+            flex: 1;
+        }
+
+        .btn-filter {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .btn-filter:hover {
+            background: var(--accent-blue);
+        }
+
+        .app-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* --- TABELA DE PRODUTOS --- */
+        .products-table {
+            padding: 0 15px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        thead tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        thead th {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody td {
+            padding: 12px 15px;
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
+
+        /* Coluna produto com imagem */
+        tbody td:first-child {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        tbody td img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        tbody td strong {
+            display: block;
+            font-size: 0.85rem;
+        }
+
+        tbody td span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Badge categoria */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-iluminacao {
+            background: #e8f0fe;
+            color: #0056b3;
+        }
+
+        .badge-paineis {
+            background: #fff3e0;
+            color: #e67e22;
+        }
+
+        .badge-lampadas {
+            background: #5b686b;
+            color: #000000;
+        }
+
+        /* Estoque crítico */
+        .estoque-critico {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+        /* Estoque ok */
+        .estoque-ok {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Paginação */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .page-controls {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .page-controls button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--border-color);
+            background: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .page-controls button.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        /* --- SUMMARY CARDS --- */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .summary-cards .card {
+            padding: 15px;
+            margin-bottom: 0;
+        }
+
+        .summary-cards .card .value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: block;
+            margin: 8px 0 4px;
+            color: var(--primary-blue);
+        }
+
+        .card-dark {
+            background: var(--primary-blue) !important;
+            color: white;
+        }
+
+        .card-dark label,
+        .card-dark .value,
+        .card-dark .growth {
+            color: white !important;
+        }
+
+        .card-highlight .value {
+            color: var(--accent-blue) !important;
+        }
+    </Style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>Naveluz Admin</h1>
+                <span>PAINEL DE GESTÃO</span>
+            </div>
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Pedidos</a></li>
+                    <li class="active"><a href="#">Produtos</a></li>
+                    <li><a href="#">Clientes</a></li>
+                    <li><a href="#">Relatórios</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-logout">Sair</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-header">
+                <div class="top-bar">
+                    <h2>Gerenciamento de Produtos</h2>
+                    <div class="top-bar-actions">
+                        🔔 <!-- sino -->
+                        ⚙️ <!-- engrenagem -->
+                        <button class="btn-save">+ Novo Produto</button>
+                    </div>
+                </div>
+            </header>
+
+            <section class="filters-section">
+                <div class="filter-group">
+                    <label>BUSCAR PRODUTO</label>
+                    <input type="text" placeholder="Nome, SKU ou EAN...">
+                </div>
+                <div class="filter-group">
+                    <label>CATEGORIA</label>
+                    <select>
+                        <option>Todas</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>STATUS DE ESTOQUE</label>
+                    <select>
+                        <option>Todos</option>
+                    </select>
+                </div>
+                <button class="btn-filter">Filtrar</button>
+            </section>
+
+            <section class="products-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PRODUTO</th>
+                            <th>SKU</th>
+                            <th>CATEGORIA</th>
+                            <th>PREÇO</th>
+                            <th>ESTOQUE</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="pendente.jpg" alt="Pendente Minimalist">
+                                <div>
+                                    <strong>Pendente Minimalist Black</strong>
+                                    <span>Linha Contemporânea</span>
+                                </div>
+                            </td>
+                            <td>NVL-3421-BK</td>
+                            <td><span class="badge badge-iluminacao">Iluminação Interna</span></td>
+                            <td>R$ 489,90</td>
+                            <td><span class="badge badge-iluminacao">45 un</span> </td>
+                            <td>...</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="pendente.jpg" alt="Pendente Minimalist">
+                                <div>
+                                    <strong>Poste Solar Smart LED</strong>
+                                    <span>Energia Sustentavel</span>
+                                </div>
+                            </td>
+                            <td>SOL-9980-XT</td>
+                            <td><span class="badge badge-paineis">Paineis Solares</span></td>
+                            <td>R$ 1.250,00</td>
+                            <td><span class="badge badge-paineis">8 un</span></td>
+                            <td>...</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="pendente.jpg" alt="Pendente Minimalist">
+                                <div>
+                                    <strong>Painel LED Slim Embutida</strong>
+                                    <span>Lampada LED</span>
+                                </div>
+                            </td>
+                            <td>LED-1224-WT</td>
+                            <td><span class="badge badge-lampadas">Lâmpadas LED</span></td>
+                            <td>R$ 89,90</td>
+                            <td><span class="badge badge-iluminacao">124 un</span></td>
+                            <td>...</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="pendente.jpg" alt="Pendente Minimalist">
+                                <div>
+                                    <strong>Lustre de Cristal Royal 8</strong>
+                                    <span>Linha Contemporânea</span>
+                                </div>
+                            </td>
+                            <td>PREM-0055-CR</td>
+                            <td><span class="badge badge-iluminacao">Iluminação Interna</span></td>
+                            <td>R$ 3.450,00</td>
+                            <td><span class="badge badge-iluminacao">45 un</span></td>
+                            <td>...</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <div class="pagination">
+                    <span>Mostrando 1-4 de 48 produtos</span>
+                    <div class="page-controls">
+                        <button>
+                            << /button>
+                                <button class="active">1</button>
+                                <button>2</button>
+                                <button>3</button>
+                                <span>...</span>
+                                <button>12</button>
+                                <button>></button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="summary-cards">
+                <div class="card card-dark">
+                    <label>Total em Catálogo</label>
+                    <span class="value">1.248</span>
+                    <span class="growth">+12 este mês</span>
+                </div>
+                <div class="card">
+                    <label>Estoque Crítico</label>
+                    <span class="value">14</span>
+                    <a href="#">Ver Relatório -></a>
+                </div>
+                <div class="card">
+                    <label>Valor em Estoque</label>
+                    <span class="value">R$ 245k</span>
+                    <small>Atualizado há 2h</small>
+                </div>
+                <div class="card card-highlight">
+                    <label>DESTAQUE DO MÊS</label>
+                    <strong>Lustre Royal</strong>
+                    <span>24 unidades vendidas</span>
+                </div>
+            </section>
+
+            <footer class="main-footer">
+                <div class="footer-brand">
+                    <h3>NAVELUZ</h3>
+                    <p>Excelência em materiais elétricos e soluções em iluminação...</p>
+                </div>
+                <div class="footer-links">
+                    <strong>LINKS RÁPIDOS</strong>
+                    <a href="#">Privacidade</a>
+                    <a href="#">Termos</a>
+                    <a href="#">Localização</a>
+                    <a href="#">Instagram</a>
+                </div>
+                <div class="footer-copy">
+                    © 2024 NAVELUZ COMERCIO DE MATERIAIS ELETRICOS LTDA.
+                </div>
+            </footer>
+        </main>
+    </div>
+
+</body>
+
+</html>

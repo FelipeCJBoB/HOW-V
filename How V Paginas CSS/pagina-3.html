@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneira Slim 4T Hydra - Naveluz</title>
+    <link rel="stylesheet" href="produto-style.css">
+    <style>
+        /* --- RESET & BASE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #1a1a1a;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            margin-top: 0;
+        }
+
+        header nav .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        header nav ul li {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #444;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        header nav ul li:hover {
+            color: #f4a300;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-actions input {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            width: 200px;
+            background: #f5f5f5;
+            outline: none;
+        }
+
+        .icon-user,
+        .icon-cart {
+            font-size: 0.9rem;
+            color: #444;
+            cursor: pointer;
+        }
+
+        /* --- BREADCRUMB --- */
+        .breadcrumb {
+            padding: 12px 40px;
+            background: #f4f4f4;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .breadcrumb p {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .breadcrumb strong {
+            color: #1a1a1a;
+        }
+
+        /* --- PRODUCT ESSENTIAL --- */
+        .product-essential {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px 40px;
+            background: #ffffff;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* GALERIA */
+        .product-gallery {
+            display: flex;
+            gap: 15px;
+        }
+
+        .thumbnails {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .thumbnails img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .thumbnails img:hover {
+            border-color: #1a1a1a;
+        }
+
+        .main-image img {
+            width: 100%;
+            max-width: 380px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #f0f0f0;
+        }
+
+        /* INFO DO PRODUTO */
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #f4a300;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            width: fit-content;
+        }
+
+        .product-info h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            line-height: 1.2;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .old-price {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .current-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+        .discount-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* OPÇÕES DE VOLTAGEM */
+        .options p {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .options button {
+            padding: 8px 20px;
+            border: 2px solid #1a1a1a;
+            border-radius: 6px;
+            background: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .options button:hover,
+        .options button:first-of-type {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        /* AÇÕES DE COMPRA */
+        .purchase-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .quantity button {
+            width: 36px;
+            height: 36px;
+            background: #f4f4f4;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .quantity button:hover {
+            background: #e0e0e0;
+        }
+
+        .quantity span {
+            padding: 0 16px;
+            font-weight: 600;
+        }
+
+        .btn-add-cart {
+            flex: 1;
+            padding: 12px 20px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-add-cart:hover {
+            background: #f4a300;
+            color: #111;
+        }
+
+        /* CALCULAR FRETE */
+        .shipping-calculator p {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .shipping-calculator {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .shipping-calculator input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            background: #fafafa;
+            outline: none;
+        }
+
+        .shipping-calculator button {
+            padding: 10px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .shipping-calculator button:hover {
+            background: #f4a300;
+            color: #111;
+        }
+
+        /* --- PRODUCT DETAILS --- */
+        .product-details {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 30px;
+            gap: 5px;
+        }
+
+        .tabs-header button {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #888;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s;
+        }
+
+        .tabs-header button:first-child {
+            color: #1a1a1a;
+            border-bottom-color: #1a1a1a;
+        }
+
+        .tabs-header button:hover {
+            color: #1a1a1a;
+        }
+
+        .tab-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .features h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .features p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .specs-grid {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .specs-grid li {
+            font-size: 0.85rem;
+            color: #555;
+            padding: 10px;
+            background: #f4f4f4;
+            border-radius: 6px;
+        }
+
+        .specs-grid li strong {
+            color: #1a1a1a;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .installation-box {
+            background: #1a1a1a;
+            color: white;
+            border-radius: 10px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .installation-box h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .installation-box p {
+            font-size: 0.85rem;
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .installation-box a {
+            color: #f4a300;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-top: auto;
+        }
+
+        .installation-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- PRODUTOS RELACIONADOS --- */
+        .related-products {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 40px 40px;
+        }
+
+        .related-products h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f0f0f0;
+        }
+
+        .product-card h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .product-card .price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .product-card button {
+            margin-top: auto;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .product-card button:hover {
+            background: #f4a300;
+            color: #111;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #111111;
+            color: #cccccc;
+            padding: 40px;
+        }
+
+        .footer-columns {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+        }
+
+        .footer-info .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .footer-info p {
+            font-size: 0.85rem;
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .footer-contact h4,
+        .footer-newsletter h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .footer-contact p {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 6px;
+        }
+
+        .footer-newsletter input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #222;
+            color: white;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .footer-newsletter input::placeholder {
+            color: #666;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #222;
+            padding-top: 20px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom p {
+            font-size: 0.75rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Naveluz</div>
+            <ul>
+                <li>Home</li>
+                <li>Elétrica</li>
+                <li>Automação</li>
+                <li>Tools</li>
+            </ul>
+            <div class="user-actions">
+                <input type="text" placeholder="Buscar produtos...">
+                <span class="icon-user"></span>
+                <span class="icon-cart">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <nav class="breadcrumb">
+            <p>HOME / MATERIAIS / <strong>TORNEIRA SLIM 4T HYDRA</strong></p>
+        </nav>
+
+        <section class="product-essential">
+            <div class="product-gallery">
+                <div class="thumbnails">
+                    <img src="thumb1.jpg" alt="Miniatura 1">
+                    <img src="thumb2.jpg" alt="Miniatura 2">
+                    <img src="thumb3.jpg" alt="Miniatura 3">
+                </div>
+                <div class="main-image">
+                    <img src="torneira-principal.jpg" alt="Torneira Slim 4T Hydra">
+                </div>
+            </div>
+
+            <div class="product-info">
+                <span class="badge">PREMIUM HYDRA SERIES</span>
+                <h1>Torneira Slim 4T Hydra</h1>
+                <p class="tagline">Design arrojado e funcionalidade para a sua cozinha moderna.</p>
+
+                <div class="price-container">
+                    <span class="old-price">R$ 580,00</span>
+                    <span class="current-price">R$ 219,00</span>
+                    <span class="discount-badge">64% OFF</span>
+                </div>
+
+                <div class="options">
+                    <p>VOLTAGEM</p>
+                    <button>127V</button>
+                    <button>220V</button>
+                </div>
+
+                <div class="purchase-actions">
+                    <div class="quantity">
+                        <button>-</button>
+                        <span>1</span>
+                        <button>+</button>
+                    </div>
+                    <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                </div>
+
+                <div class="shipping-calculator">
+                    <p>CALCULAR FRETE</p>
+                    <input type="text" placeholder="00000-000">
+                    <button>Calcular</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-details">
+            <div class="tabs-header">
+                <button>DESCRIÇÃO TÉCNICA</button>
+                <button>AVALIAÇÕES (48)</button>
+                <button>INSTALAÇÃO</button>
+            </div>
+
+            <div class="tab-content">
+                <div class="features">
+                    <h2>Eficiência e Controle</h2>
+                    <p>A Torneira Slim 4T da Hydra foi projetada para quem não abre mão de conforto...</p>
+
+                    <ul class="specs-grid">
+                        <li><strong>Material:</strong> Termoplástico de Alta Resistência</li>
+                        <li><strong>Pressão:</strong> 20 a 400kPa (2 a 40mca)</li>
+                        <li><strong>Potência:</strong> 5500W (127V) / 6400W (220V)</li>
+                        <li><strong>Frequência:</strong> 50/60Hz</li>
+                    </ul>
+                </div>
+
+                <div class="installation-box">
+                    <h3>Fácil Instalação</h3>
+                    <p>Sistema exclusivo de engate rápido...</p>
+                    <a href="#">DOWNLOAD MANUAL PDF</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="related-products">
+            <h2>Combine com</h2>
+            <div class="product-grid">
+                <article class="product-card">
+                    <img src="furadeira.jpg" alt="Parafusadeira">
+                    <h3>Parafusadeira Furadeira Impacto 20V</h3>
+                    <span class="price">R$ 1.104,15</span>
+                    <button>Adicionar ao Carrinho</button>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="footer-info">
+                <div class="logo">Naveluz</div>
+                <p>Sua obra completa, do alicerce à decoração...</p>
+            </div>
+            <div class="footer-contact">
+                <h4>ATENDIMENTO</h4>
+                <p>(47) 99257-4071</p>
+                <p>Instagram</p>
+            </div>
+            <div class="footer-newsletter">
+                <h4>NEWSLETTER</h4>
+                <input type="email" placeholder="E-mail">
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 NAVELUZ COMÉRCIO DE MATERIAIS ELÉTRICOS LTDA</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

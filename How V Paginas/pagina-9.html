@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naveluz Admin - Gerenciamento de Produtos</title>
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>Naveluz Admin</h1>
+                <span>Painel de Gestão</span>
+            </div>
+            
+            <nav class="menu">
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Pedidos</a></li>
+                    <li class="active"><a href="#">Produtos</a></li>
+                    <li><a href="#">Clientes</a></li>
+                    <li><a href="#">Relatórios</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-logout">Sair</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-header">
+                <h2>Gerenciamento de Produtos</h2>
+                <div class="header-actions">
+                    <button class="btn-icon">🔔</button>
+                    <button class="btn-icon">⚙️</button>
+                    <button class="btn-primary">+ Novo Produto</button>
+                </div>
+            </header>
+
+            <section class="filters-section">
+                <div class="filter-group">
+                    <label>BUSCAR PRODUTO</label>
+                    <input type="text" placeholder="Nome, SKU ou EAN...">
+                </div>
+                <div class="filter-group">
+                    <label>CATEGORIA</label>
+                    <select><option>Todas</option></select>
+                </div>
+                <div class="filter-group">
+                    <label>STATUS DE ESTOQUE</label>
+                    <select><option>Todos</option></select>
+                </div>
+                <button class="btn-filter">Filtrar</button>
+            </section>
+
+            <section class="products-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PRODUTO</th>
+                            <th>SKU</th>
+                            <th>CATEGORIA</th>
+                            <th>PREÇO</th>
+                            <th>ESTOQUE</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="pendente.jpg" alt="Pendente Minimalist">
+                                <div>
+                                    <strong>Pendente Minimalist Black</strong>
+                                    <span>Linha Contemporânea</span>
+                                </div>
+                            </td>
+                            <td>NVL-3421-BK</td>
+                            <td><span class="badge">Iluminação Interna</span></td>
+                            <td>R$ 489,90</td>
+                            <td>45 un</td>
+                            <td>...</td>
+                        </tr>
+                        </tbody>
+                </table>
+
+                <div class="pagination">
+                    <span>Mostrando 1-4 de 48 produtos</span>
+                    <div class="page-controls">
+                        <button><</button>
+                        <button class="active">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <span>...</span>
+                        <button>12</button>
+                        <button>></button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="summary-cards">
+                <div class="card card-dark">
+                    <label>Total em Catálogo</label>
+                    <span class="value">1.248</span>
+                    <span class="growth">+12 este mês</span>
+                </div>
+                <div class="card">
+                    <label>Estoque Crítico</label>
+                    <span class="value">14</span>
+                    <a href="#">Ver Relatório</a>
+                </div>
+                <div class="card">
+                    <label>Valor em Estoque</label>
+                    <span class="value">R$ 245k</span>
+                    <small>Atualizado há 2h</small>
+                </div>
+                <div class="card card-highlight">
+                    <label>DESTAQUE DO MÊS</label>
+                    <strong>Lustre Royal</strong>
+                    <span>24 unidades vendidas</span>
+                </div>
+            </section>
+
+            <footer class="main-footer">
+                <div class="footer-brand">
+                    <h3>NAVELUZ</h3>
+                    <p>Excelência em materiais elétricos e soluções em iluminação...</p>
+                </div>
+                <div class="footer-links">
+                    <strong>LINKS RÁPIDOS</strong>
+                    <a href="#">Privacidade</a>
+                    <a href="#">Termos</a>
+                    <a href="#">Localização</a>
+                    <a href="#">Instagram</a>
+                </div>
+                <div class="footer-copy">
+                    © 2024 NAVELUZ COMERCIO DE MATERIAIS ELETRICOS LTDA.
+                </div>
+            </footer>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naveluz Admin - Editar Produto</title>
+    <style>
+        :root {
+            --bg-body: #f4f7f6;
+            --sidebar-bg: #ffffff;
+            --primary-blue: #003366;
+            --accent-blue: #0056b3;
+            --text-main: #333333;
+            --text-muted: #888888;
+            --border-color: #e0e0e0;
+            --white: #ffffff;
+            --success: #28a745;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 240px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .logo h1 {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+        }
+
+        .logo span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        nav {
+            margin-top: 40px;
+            flex-grow: 1;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav ul li.active {
+            background: #eef2f7;
+            color: var(--primary-blue);
+        }
+
+        nav ul li:hover:not(.active) {
+            background: #f9f9f9;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            margin-left: 240px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            background: var(--white);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-back {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-discard {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* --- GRID DE CONTEÚDO --- */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            padding: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .card h3 {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card h3 span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #fafafa;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .input-group {
+            flex: 1;
+        }
+
+        /* --- AREA DE MÍDIA E STATUS --- */
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            text-align: center;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .thumb-grid {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumb {
+            width: 60px;
+            height: 60px;
+            background: #eee;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-badge {
+            background: #e7f4e9;
+            color: var(--success);
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .dark-card {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .dark-card h3 { color: white; }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- FOOTER --- */
+        .page-footer {
+            margin-top: auto;
+            background: var(--white);
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .footer-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .copyright {
+            text-align: right;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <h1>Naveluz Admin</h1>
+            <span>PAINEL DE GESTÃO</span>
+        </div>
+        <nav>
+            <ul>
+                <li>Dashboard</li>
+                <li>Pedidos</li>
+                <li class="active">Produtos</li>
+                <li>Clientes</li>
+                <li>Relatórios</li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-discard" style="width: 100%;">Sair</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="breadcrumb">
+                <button class="btn-back">←</button>
+                <h2>Editar Produto</h2>
+            </div>
+            <div class="actions">
+                <button class="btn-discard">Descartar</button>
+                <button class="btn-save">Publicar Alterações</button>
+            </div>
+        </header>
+
+        <div class="content-grid">
+            <section class="form-column">
+                <div class="card">
+                    <h3>Informações Básicas</h3>
+                    <div class="input-group">
+                        <label>NOME DO PRODUTO</label>
+                        <input type="text" value="Pendente Industrial Vintage Lux">
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <label>SKU</label>
+                            <input type="text" value="LUM-882-VNTG">
+                        </div>
+                        <div class="input-group">
+                            <label>CATEGORIA</label>
+                            <select>
+                                <option>Pendentes e Lustres</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>DESCRIÇÃO</label>
+                        <textarea rows="4">Pendente industrial de alta qualidade com acabamento em cobre envelhecido, ideal para bancadas e áreas gourmet.</textarea>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Comércio e Estoque</h3>
+                    <div class="row">
+                        <div class="input-group">
+                            <label>PREÇO DE VENDA</label>
+                            <input type="text" value="R$ 489,90">
+                        </div>
+                        <div class="input-group">
+                            <label>PREÇO DE CUSTO</label>
+                            <input type="text" value="R$ 215,00">
+                        </div>
+                        <div class="input-group">
+                            <label>QTD. EM ESTOQUE</label>
+                            <input type="number" value="24">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="side-column">
+                <div class="card">
+                    <h3>Status de Publicação</h3>
+                    <div class="status-badge">Visibilidade: ATIVO</div>
+                    <button class="btn-discard" style="width: 100%;">Visualizar na Loja</button>
+                </div>
+
+                <div class="card">
+                    <h3>Mídia do Produto <span>MÁX. 5 FOTOS</span></h3>
+                    <div class="upload-area">
+                        <p style="font-size: 0.8rem; color: #666;">Solte suas fotos aqui ou <strong>procure</strong></p>
+                    </div>
+                    <div class="thumb-grid">
+                        <div class="thumb">🖼️</div>
+                        <div class="thumb">🖼️</div>
+                        <div class="thumb" style="border-style: dashed;">+</div>
+                    </div>
+                </div>
+
+                <div class="card dark-card">
+                    <h3>Dimensões & Peso</h3>
+                    <div class="spec-row"><span>ALTURA</span> <strong>45 cm</strong></div>
+                    <div class="spec-row"><span>LARGURA</span> <strong>30 cm</strong></div>
+                    <div class="spec-row"><span>PESO</span> <strong>1.2 kg</strong></div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="page-footer">
+            <div><strong>NAVELUZ</strong> Admin v2.4.0</div>
+            <div class="footer-pagination">
+                
+                
+            </div>
+            <div class="copyright">© 2024 Naveluz Materiais Elétricos</div>
+        </footer>
+    </main>
+
+</body>
+</html>
